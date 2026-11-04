@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: divine-egg-ai-tracker
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    disk:
+      name: divine-egg-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: TIMEZONE
+        value: Asia/Phnom_Penh
+      - key: DATABASE_PATH
+        value: /var/data/divine_egg.db
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: DASHBOARD_KEY
+        sync: false
